@@ -6,6 +6,7 @@
 #include "SDL/SDL_ttf.h"
 #include <math.h>
 #include <time.h>
+
 typedef struct {
 int sec;
 int min;
@@ -36,4 +37,7 @@ SDL_Surface * updateScore(int *score);
 SDL_Surface * updateLives(int *lives);
 SDL_Surface * gameTime (timer *t);
 entities gameEntities();
-;
+int checkPrevSession();
+int showBackUpMenu();
+void onMap(SDL_Event event, SDL_Rect *headPos, SDL_Rect obj);
+void scrolling (SDL_Rect * camera, SDL_Event event, SDL_Rect *headPos, SDL_Rect obj);

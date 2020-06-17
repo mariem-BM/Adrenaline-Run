@@ -73,7 +73,7 @@ if (TTF_Init() < 0) {
 }else{
 TTF_Font * police = NULL;
 SDL_Color noir = {255, 255, 255};
-//police = TTF_OpenFont("Oswald-Bold.ttf", 32);
+
 if (police == NULL) {
   printf("error in font time\n");
 }else{
@@ -99,7 +99,55 @@ entities gameEntities(){
    e.posheart.h = e.hearts->h;
    return e;
 }
-
-
-
-
+int checkPrevSession(){
+  FILE * f = fopen("backupgame.bin", "rb");
+  if(f == NULL){
+    printf("no sessions found\n");
+    f = fopen("backupgame.bin", "wb");
+      fclose(f);
+    return 0;
+  }else{
+    printf("there's a session\n");
+      fclose(f);
+    return 1;
+  }
+}
+int showBackUpMenu(){
+  int pick, x;
+  x = checkPrevSession();
+  if(x == 1){
+    printf("1. start a new game\n");
+    printf("2. resume previous game\n");
+    do{
+    printf("give your choice\n");
+    scanf("%d", &pick);
+  }while ((pick != 1) && (pick !=2));
+  }else{
+    printf("1. start a new game\n");
+    do{
+    printf("give your choice\n");
+    scanf("%d", &pick);
+  }while (pick != 1);
+  }
+  return pick;
+}
+void onMap(SDL_Event event, SDL_Rect *headPos, SDL_Rect obj){
+  switch (event.key.keysym.sym){
+case SDLK_RIGHT:
+     headPos->x = headPos->x + 1;
+     break;
+case SDLK_LEFT:
+     headPos->x = headPos->x - 1;
+     break;
+}
+}
+void scrolling (SDL_Rect * camera, SDL_Event event, SDL_Rect *headPos, SDL_Rect obj){
+        switch (event.key.keysym.sym){
+	case SDLK_RIGHT:
+       camera->x = camera->x + 100;
+	break;
+	case SDLK_LEFT:
+       camera->x = camera->x - 100;
+	break;
+ }
+}
